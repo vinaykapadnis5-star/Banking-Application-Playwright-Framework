@@ -1,15 +1,28 @@
-# Banking-Application-Playwright-Framework
-# Banking Application - Playwright Framework
+import com.microsoft.playwright.*;
 
-Tools Used:
-- Playwright
-- Java
+public class BankingTest {
 
-Test Scenario:
-1. Open Banking Website
-2. Verify Page Title
-3. Validate Application Launch
-4. Close Browser
+    public static void main(String[] args) {
 
-Author:
-Vinay Kapadnis
+        try (Playwright playwright = Playwright.create()) {
+
+            Browser browser = playwright.chromium().launch(
+                    new BrowserType.LaunchOptions().setHeadless(false));
+
+            Page page = browser.newPage();
+
+            // Open Banking Website
+            page.navigate("https://demo.guru99.com/V4/");
+
+            System.out.println("Page Title: " + page.title());
+
+            if (page.title().contains("Guru99")) {
+                System.out.println("Banking Test Passed");
+            } else {
+                System.out.println("Banking Test Failed");
+            }
+
+            browser.close();
+        }
+    }
+}
